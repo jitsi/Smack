@@ -154,6 +154,7 @@ public class XMPPBOSHConnection extends AbstractXMPPConnection {
             if (config.isProxyEnabled()) {
                 cfgBuilder.setProxy(config.getProxyAddress(), config.getProxyPort());
             }
+            cfgBuilder.setHostAddress(config.getHostAddress());
 
             cfgBuilder.setCompressionEnabled(config.isCompressionEnabled());
 

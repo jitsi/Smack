@@ -17,6 +17,7 @@
 
 package org.jivesoftware.smack.bosh;
 
+import java.net.InetAddress;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.HashMap;
@@ -82,6 +83,10 @@ public final class BOSHConfiguration extends ConnectionConfiguration {
 
     public Map<String, String> getHttpHeaders() {
         return httpHeaders;
+    }
+
+    public InetAddress getHostAddress() {
+        return hostAddress;
     }
 
     public static Builder builder() {
