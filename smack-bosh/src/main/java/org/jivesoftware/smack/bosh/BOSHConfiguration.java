@@ -17,6 +17,7 @@
 
 package org.jivesoftware.smack.bosh;
 
+import java.net.InetAddress;
 import java.net.URI;
 import java.net.URISyntaxException;
 
@@ -26,7 +27,7 @@ import org.jivesoftware.smack.proxy.ProxyInfo;
 /**
  * Configuration to use while establishing the connection to the XMPP server via
  * HTTP binding.
- * 
+ *
  * @see XMPPBOSHConnection
  * @author Guenther Niess
  */
@@ -74,6 +75,10 @@ public final class BOSHConfiguration extends ConnectionConfiguration {
 
     public URI getURI() throws URISyntaxException {
         return new URI((https ? "https://" : "http://") + this.host + ":" + this.port + file);
+    }
+
+    public InetAddress getHostAddress() {
+        return hostAddress;
     }
 
     public static Builder builder() {
