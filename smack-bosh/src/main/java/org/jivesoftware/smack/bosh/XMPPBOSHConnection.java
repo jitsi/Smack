@@ -63,7 +63,7 @@ import org.xmlpull.v1.XmlPullParserFactory;
 /**
  * Creates a connection to an XMPP server via HTTP binding.
  * This is specified in the XEP-0206: XMPP Over BOSH.
- * 
+ *
  * @see XMPPConnection
  * @author Guenther Niess
  */
@@ -107,7 +107,7 @@ public class XMPPBOSHConnection extends AbstractXMPPConnection {
 
     /**
      * Create a HTTP Binding connection to an XMPP server.
-     * 
+     *
      * @param username the username to use.
      * @param password the password to use.
      * @param https true if you want to use SSL
@@ -129,7 +129,7 @@ public class XMPPBOSHConnection extends AbstractXMPPConnection {
 
     /**
      * Create a HTTP Binding connection to an XMPP server.
-     * 
+     *
      * @param config The configuration which is used for this connection.
      */
     public XMPPBOSHConnection(BOSHConfiguration config) {
@@ -155,6 +155,8 @@ public class XMPPBOSHConnection extends AbstractXMPPConnection {
             if (config.isProxyEnabled()) {
                 cfgBuilder.setProxy(config.getProxyAddress(), config.getProxyPort());
             }
+            cfgBuilder.setHostAddress(config.getHostAddress());
+
             client = BOSHClient.create(cfgBuilder.build());
 
             client.addBOSHClientConnListener(new BOSHConnectionListener());
@@ -197,7 +199,7 @@ public class XMPPBOSHConnection extends AbstractXMPPConnection {
         // If there is no feedback, throw an remote server timeout error
         if (!connected && !done) {
             done = true;
-            String errorMessage = "Timeout reached for the connection to " 
+            String errorMessage = "Timeout reached for the connection to "
                     + getHost() + ":" + getPort() + ".";
             throw new SmackException(errorMessage);
         }
@@ -252,7 +254,7 @@ public class XMPPBOSHConnection extends AbstractXMPPConnection {
     }
 
     /**
-     * Closes the connection by setting presence to unavailable and closing the 
+     * Closes the connection by setting presence to unavailable and closing the
      * HTTP client. The shutdown logic will be used during a planned disconnection or when
      * dealing with an unexpected disconnection. Unlike {@link #disconnect()} the connection's
      * BOSH stanza(/packet) reader will not be removed; thus connection's state is kept.
@@ -305,7 +307,7 @@ public class XMPPBOSHConnection extends AbstractXMPPConnection {
 
     /**
      * Send a HTTP request to the connection manager with the provided body element.
-     * 
+     *
      * @param body the body which will be sent.
      * @throws BOSHException
      */
@@ -421,7 +423,7 @@ public class XMPPBOSHConnection extends AbstractXMPPConnection {
     /**
      * A listener class which listen for a successfully established connection
      * and connection errors and notifies the BOSHConnection.
-     * 
+     *
      * @author Guenther Niess
      */
     private class BOSHConnectionListener implements BOSHClientConnListener {
