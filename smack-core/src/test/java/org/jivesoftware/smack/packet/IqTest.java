@@ -35,4 +35,36 @@ public class IqTest {
         assertXmlSimilar(expected, errorIq.toXML());
     }
 
+    @ParameterizedTest
+    @EnumSource(SmackTestUtil.XmlPullParserKind.class)
+    public void testIqWithXmlns(SmackTestUtil.XmlPullParserKind parserKind) throws Exception {
+        final String iqXml = "<iq xmlns='jabber:client' type='result' to='username@tigase.mydomain.org/1423222896-tigase-59' id='3QLCH-1'>" +
+                        "<bind xmlns='urn:ietf:params:xml:ns:xmpp-bind'>" +
+                        "<jid>foo@tigase.mydomain.org/myresource</jid>" +
+                        "</bind>" +
+                        "</iq>";
+        final String xml =
+                        "<stream:stream xmlns='jabber:client' to='tigase.mydomain.org' xmlns:stream='http://etherx.jabber.org/streams' version='1.0' from='username@tigase.mydomain.org' xml:lang='en-US'>" +
+                        iqXml +
+                        "</stream:stream>";
+
+        XmlPullParser parser = SmackTestUtil.getParserFor(xml, "iq", parserKind);
+        IQ iq = PacketParserUtils.parseIQ(parser);
+        assertXmlSimilar(iqXml, iq.toXML());
+    }
+
+    @ParameterizedTest
+    @EnumSource(SmackTestUtil.XmlPullParserKind.class)
+    public void testUnparsedIq(SmackTestUtil.XmlPullParserKind parserKind) throws Exception {
+        final String iqXml = "<iq xmlns='jabber:client' type='get' id='test-1'>" +
+                        "<query xmlns='jabber:iq:version'/>" +
+                        "</iq>";
+        final String expected = "<iq xmlns='jabber:client'  id='test-1' type='get'>"
+                         + "<query xmlns='jabber:iq:version'>&lt;query xmlns=&apos;jabber:iq:version&apos;/&gt;</query>"
+                         + "</iq>";
+
+        XmlPullParser parser = SmackTestUtil.getParserFor(iqXml, "iq", parserKind);
+        IQ iq = PacketParserUtils.parseIQ(parser);
+        assertXmlSimilar(expected, iq.toXML());
+    }
 }
