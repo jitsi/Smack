@@ -20,4 +20,8 @@ brew install openjdk@11
 export JAVA_HOME=/opt/homebrew/Cellar/openjdk@11/11.0.26/
 
 ## Build and install into a custom maven repository:
+./gradle-${GRADLE_VERSION}/bin/gradle check
+
+In case of errors about jxmpp-jid remove ~/.m2/repository/org/jxmpp
+
 ./gradle-${GRADLE_VERSION}/bin/gradle publishToMavenLocal -Dmaven.repo.local=~/git/jitsi-maven-repository/snapshots/
