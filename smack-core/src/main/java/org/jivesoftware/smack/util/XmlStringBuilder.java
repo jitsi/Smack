@@ -594,7 +594,7 @@ public class XmlStringBuilder implements Appendable, CharSequence, Element {
         return this;
     }
 
-    public enum AppendApproach {
+    enum AppendApproach {
         /**
          * Simply add the given CharSequence to this builder.
          */
