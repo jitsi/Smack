@@ -258,15 +258,15 @@ public class PacketWriterTest {
         }
     }
 
-    private static class RecordingStringWriter extends Writer {
-        private final StringBuffer buffer = new StringBuffer();
+    private static final class RecordingStringWriter extends Writer {
+        private final StringBuilder buffer = new StringBuilder();
 
         @Override
-        public void write(char[] cbuf, int off, int len) {
+        public synchronized void write(char[] cbuf, int off, int len) {
             buffer.append(cbuf, off, len);
         }
 
-        boolean contains(String s) {
+        synchronized boolean contains(String s) {
             return buffer.indexOf(s) >= 0;
         }
 
